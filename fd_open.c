@@ -56,3 +56,24 @@ if(val & O_SYNC ){
 
     return 0;
 }
+
+
+/*Setting file flags */
+
+void set_flags(int fd, int flags){
+    int val;
+    if((val= fcntl(fd, F_GETFL,0))<0){
+        fprintf(stderr,"File descriptors cannot be extracted for: %d",fd);
+    } 
+
+    val |=flags; 
+    /*Setting the file flag without making the other flag 0. */
+    /*This is safe way fo setting the flag.
+    */
+    if (fcntl(fd,F_SETFL,val)<0)
+    {
+        fprintf(stderr,"The flag is not set");
+    }
+
+    
+}
